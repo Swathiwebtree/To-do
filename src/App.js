@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import './App.css';
+import TaskList from './TaskList';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -8,12 +9,6 @@ function App() {
   const addTask = () => {
     setTasks([...tasks, newTask]);
     setnewTask("");
-  };
-
-  const deleteTask = (index) => {
-    const newTasks = [...tasks];
-    newTasks.splice(index, 1);
-    setTasks(newTasks);
   };
   return(
     <div className="app">
@@ -25,16 +20,11 @@ function App() {
         onChange={(e) => setnewTask(e.target.value)}
         placeholder='Enter a new Task now'
       />
-      <button onClick={addTask}>Add Task</button>
-      <ul className="task-list">
-        {tasks.map((task, index) => (
-          <li key={index}>
-            {task}
-            <button onClick={() => deleteTask(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <button className="add-button" onClick={addTask}>
+        Add Task
+        </button>
+      </div>
+      <TaskList tasks={tasks} setTasks={setTasks} />
   </div>
   );
 }
