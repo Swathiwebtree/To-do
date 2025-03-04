@@ -24,3 +24,9 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
+.empty-list {
+  text-align: center;
+  font-size: italic;
+  color: #888;
+  margin-top: 20px;
+}
