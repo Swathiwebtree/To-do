@@ -8,6 +8,8 @@
 .input-container {
   display: flex;
   gap: 10px;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
 
 }
@@ -20,40 +22,18 @@ input {
   border-radius: 5px;
 }
 
-button {
-  padding: 10px;
+.add-button {
+  padding: 10px 15px;
   font-size: 16px;
-  border: none;
-  border-radius: 5px;
   background-color: #007bff;
   color: white;
-  cursor: pointer;
-}
-
-button :hover {
-  background-color:#007bff;
-}
-
-.task-list {
-  list-style: none;
-  padding: 0;
-}
-
-.task-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.delete-button {
-  background-color:none;
-  color:red;
   border: none;
-  font-size: 18px;
   border-radius: 5px;
-  padding: 5px 10px;
   cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
 }
