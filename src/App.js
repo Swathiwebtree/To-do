@@ -16,17 +16,17 @@ function App() {
     setTasks(newTasks);
   };
   return(
-    <div className='App'>
+    <div className="app">
     <h1>Todo List</h1>
-    <div>
+    <div className="input-container">
       <input
         type="text"
         value={newTask}
         onChange={(e) => setnewTask(e.target.value)}
-        placeholder='Enter a new Task'
+        placeholder='Enter a new Task now'
       />
       <button onClick={addTask}>Add Task</button>
-      <ul>
+      <ul className="task-list">
         {tasks.map((task, index) => (
           <li key={index}>
             {task}
