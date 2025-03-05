@@ -16,17 +16,15 @@
 }
 
 .delete-btn {
-  background: #dc3545;
-  color: white;
+  background: none;
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 18px;
+  color: red;
 }
-.empty-list {
-  text-align: center;
-  font-size: italic;
+
+.no-results {
   color: #888;
-  margin-top: 20px;
+  font-style: italic;
+  margin-top: 10px;
 }
