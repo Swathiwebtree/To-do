@@ -45,21 +45,31 @@
   border-radius: 5px;
 }
 
-.save-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.error {
+  color: red;
+  font-size: 14px;
 }
 
-.close-btn {
+.save-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.delete-confirm-btn {
   background-color: red;
   color: white;
   padding: 10px;
   border: none;
   border-radius: 5px;
-  margin-left: 10px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.close-btn {
+  background-color: gray;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
