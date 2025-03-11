@@ -19,12 +19,12 @@ function App() {
   });
   const [errors, setErrors] = useState({});
 
-  const createdDate = new Date().toLocaleDateString();
+  const createdDate = new Date().toISOString();
 
   const openModal = () => {
     setNewTask({ 
       name: "",
-      createdDate: new Date().toLocaleDateString(), 
+      createdDate: new Date().toISOString(), 
       endDate: "", 
       status: "New" 
     });
@@ -56,7 +56,7 @@ function App() {
 
   const saveTask = () => {
     if (validateForm()) {
-      setTasks((prevTasks) => [...prevTasks, newTask, createdDate]);
+      setTasks((prevTasks) => [...prevTasks, newTask]);
       setModalIsOpen(false);
     }
   };
@@ -95,7 +95,7 @@ function App() {
       isOpen={modalIsOpen} 
       onRequestClose={closeModal} 
       className="modal" 
-      style={{border: "1px solid red",zIndex:'99'}}>
+      >
         <h3>Add New Task</h3>
         <form>
         <input
@@ -103,6 +103,7 @@ function App() {
           placeholder="Task Name"
           value={newTask.name}
           onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
+          required
         />
 
         {errors.name && <p className="error">{errors.name}</p>}     
@@ -112,11 +113,12 @@ function App() {
           type="date"
           value={newTask.endDate}
           onChange={(e) => setNewTask({ ...newTask, endDate: e.target.value })}
+          min={new Date().toISOString().split("T")[0]} 
+          required
         />
         {errors.endDate && <p className="error">{errors.endDate}</p>}
-        <button className="save-btn" type="button" onClick={saveTask}disabled={!newTask.name || !newTask.endDate}
-        style={{ backgroundColor: newTask.name && newTask.endDate ? "blue" : "gray",color: "white",cursor: newTask.name && newTask.endDate ? "pointer" : "not-allowed",
-               }}
+        <button className="save-btn" type="button" onClick={saveTask} disabled={!newTask.name || !newTask.endDate}
+        style={{backgroundColor: (!newTask.name || !newTask.endDate) ? "grey" : "blue"}}
         >
         Save
         </button>
