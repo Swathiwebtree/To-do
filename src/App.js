@@ -13,16 +13,18 @@ function App() {
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [newTask, setNewTask] = useState({
     name: "",
-    createdDate: new Date().toISOString().split("T")[0],
+    createdDate: new Date().toISOString(),
     endDate: "",
     status: "New",
   });
   const [errors, setErrors] = useState({});
 
+  const createdDate = new Date().toLocaleDateString();
+
   const openModal = () => {
     setNewTask({ 
       name: "",
-      createdDate: new Date().toISOString().split("T")[0], 
+      createdDate: new Date().toLocaleDateString(), 
       endDate: "", 
       status: "New" 
     });
@@ -36,18 +38,27 @@ function App() {
 
   const validateForm = () => {
     let newErrors = {};
+    const createdDate = new Date(newTask.createdDate);
+    const endDate = new Date(newTask.endDate);
+  
     if (!newTask.name.trim()) newErrors.name = "Task name is required.";
-    if (!newTask.endDate) newErrors.endDate = "End date is required.";
-
+    if (!newTask.endDate) {
+      newErrors.endDate = "End date is required.";
+    } else if (endDate < createdDate) {
+      newErrors.endDate = "End date cannot be earlier than the created date.";
+    }
+  
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
+  
 
   const saveTask = () => {
-    if (!validateForm()) return;
-
-    setTasks([...tasks, newTask]);
-    closeModal();
+    if (validateForm()) {
+      setTasks((prevTasks) => [...prevTasks, newTask, createdDate]);
+      setModalIsOpen(false);
+    }
   };
 
   const confirmDelete = (index) => {
@@ -70,17 +81,16 @@ function App() {
       <button className="add-btn" onClick={openModal}>Add Task</button>
 
       {tasks.length > 0 && (
-        <input
+      <input
           type="text"
           className="search-bar"
           placeholder="Search tasks"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      )}
+  />
+)}
 
-      <TaskList tasks={tasks} confirmDelete={confirmDelete} searchQuery={searchQuery}/>
-
+      <TaskList tasks={tasks} confirmDelete={confirmDelete} searchQuery={searchQuery} setNewTask={setNewTask} setModalIsOpen={setModalIsOpen}/>
       <Modal 
       isOpen={modalIsOpen} 
       onRequestClose={closeModal} 
@@ -96,7 +106,6 @@ function App() {
         />
 
         {errors.name && <p className="error">{errors.name}</p>}     
-        <p><strong>Created Date:</strong>{newTask.createdDate}</p>
         <label><strong>Select End Date:</strong></label>
         <input
           placeholder="End Date"
@@ -105,14 +114,13 @@ function App() {
           onChange={(e) => setNewTask({ ...newTask, endDate: e.target.value })}
         />
         {errors.endDate && <p className="error">{errors.endDate}</p>}
-        <button
-            className="save-btn"
-            type="button"
-            onClick={saveTask}
-            disabled={!newTask.name || !newTask.endDate}
-          >
-            Save
-          </button>
+        <button className="save-btn" type="button" onClick={saveTask}disabled={!newTask.name || !newTask.endDate}
+        style={{ backgroundColor: newTask.name && newTask.endDate ? "blue" : "gray",color: "white",cursor: newTask.name && newTask.endDate ? "pointer" : "not-allowed",
+               }}
+        >
+        Save
+        </button>
+
           <button className="close-btn" type="button" onClick={closeModal}>Close</button>
         </form>
       </Modal>
