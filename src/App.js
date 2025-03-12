@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TaskList from "./TaskList";
 import Modal from "react-modal";
 import "./App.css";
@@ -6,25 +6,34 @@ import "./App.css";
 Modal.setAppElement("#root");
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() =>{
+
+    const SavedTasks = localStorage.getItem("tasks");
+    return  SavedTasks  ? JSON.parse(SavedTasks):[];
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState(null);
+  const createdDate = new Date().toISOString();
   const [newTask, setNewTask] = useState({
     name: "",
-    createdDate: new Date().toISOString(),
+    createdDate,
     endDate: "",
     status: "New",
   });
   const [errors, setErrors] = useState({});
 
-  const createdDate = new Date().toISOString();
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+  
+
 
   const openModal = () => {
     setNewTask({ 
       name: "",
-      createdDate: new Date().toISOString(), 
+      createdDate, 
       endDate: "", 
       status: "New" 
     });
